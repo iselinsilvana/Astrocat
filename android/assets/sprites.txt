@@ -1,0 +1,26 @@
+sprites.png
+size: 1603, 781
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+pus_KattGoingDown
+  rotate: false
+  xy: 0, 0
+  size: 534, 780
+  orig: 534, 780
+  offset: 0, 0
+  index: -1
+pus_KattGoingUp
+  rotate: false
+  xy: 534, 0
+  size: 535, 781
+  orig: 535, 781
+  offset: 0, 0
+  index: -1
+pus_KattSit
+  rotate: false
+  xy: 1069, 0
+  size: 534, 781
+  orig: 534, 781
+  offset: 0, 0
+  index: -1

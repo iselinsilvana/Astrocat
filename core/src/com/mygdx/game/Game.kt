@@ -1,17 +1,25 @@
 package com.mygdx.game
 
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 
 class Game : KtxGame<KtxScreen>() {
-    val batch by lazy { SpriteBatch() }
-    val font by lazy { BitmapFont() }
+    lateinit var batch: SpriteBatch
+    lateinit var assetManager: AssetManager
 
     override fun create() {
+        assetManager = AssetManager()
+        Assets.load(assetManager)
+        batch = SpriteBatch()
         addScreen(MainGameScreen(this))
         setScreen<MainGameScreen>()
-        super.create()
+    }
+
+    override fun dispose() {
+        batch.dispose()
+        assetManager.dispose()
     }
 }

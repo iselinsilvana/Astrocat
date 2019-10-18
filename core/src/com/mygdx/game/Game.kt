@@ -14,10 +14,4 @@ class Game : KtxGame<KtxScreen>() {
         setScreen<MainGameScreen>()
         super.create()
     }
-
-    override fun dispose() {
-        batch.dispose()
-        font.dispose()
-        super.dispose()
-    }
 }

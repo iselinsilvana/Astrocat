@@ -25,12 +25,11 @@ class MainGameScreen(val game: Game) : KtxScreen {
 
     }
 
-    val width = Gdx.graphics.width.toFloat()
-    val height = Gdx.graphics.height.toFloat()
+    private val width = Gdx.graphics.width.toFloat()
+    private val height = Gdx.graphics.height.toFloat()
 
-    val batch = SpriteBatch()
-
-    val pusefinn = Pusefinn()
+    private val batch = SpriteBatch()
+    private val pusefinn = Pusefinn()
 
     private var hughscore: String? = null
     private val camera = OrthographicCamera(WIDTH_F, HEIGHT_F).apply {
@@ -70,6 +69,4 @@ class MainGameScreen(val game: Game) : KtxScreen {
         batch.dispose()
         super.dispose()
     }
-
-    //if (gameOver) gameOver()
 }

@@ -35,13 +35,11 @@ object Assets {
         background = assetManager.get("livingroom.png", Texture::class.java)
         backgroundRegion = TextureRegion(background, 0, 0, WIDTH, HEIGHT)
 
-
         val puseFinnTextureAtlas = TextureAtlas("sprites.txt")
         puseFinnFalling = puseFinnTextureAtlas.createSprite("pus_KattGoingDown")
         puseFinnSitting = puseFinnTextureAtlas.createSprite("pus_KattSit")
         puseFinnLaunching = puseFinnTextureAtlas.createSprite("pus_KattGoingUp")
     }
-
 
     fun dispose(){
         background = null

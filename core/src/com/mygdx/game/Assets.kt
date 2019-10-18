@@ -2,6 +2,8 @@ package com.mygdx.game
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ktx.assets.load
 
@@ -19,6 +21,11 @@ object Assets {
     //crash sound
     var background: Texture? = null
     var backgroundRegion: TextureRegion? = null
+    var puseFinnFalling: Sprite? = null
+    var puseFinnSitting: Sprite? = null
+    var puseFinnLaunching: Sprite? = null
+
+    private var puseFinnTextureAtlas: TextureAtlas? = null
 
 
     // TODO make this async
@@ -27,6 +34,23 @@ object Assets {
         assetManager.finishLoading()
         background = assetManager.get("livingroom.png", Texture::class.java)
         backgroundRegion = TextureRegion(background, 0, 0, WIDTH, HEIGHT)
+
+
+        val puseFinnTextureAtlas = TextureAtlas("sprites.txt")
+        puseFinnFalling = puseFinnTextureAtlas.createSprite("pus_KattGoingDown")
+        puseFinnSitting = puseFinnTextureAtlas.createSprite("pus_KattSit")
+        puseFinnLaunching = puseFinnTextureAtlas.createSprite("pus_KattGoingUp")
+    }
+
+
+    fun dispose(){
+        background = null
+        backgroundRegion = null
+        puseFinnFalling = null
+        puseFinnSitting = null
+        puseFinnLaunching = null
+        puseFinnTextureAtlas?.dispose()
+        puseFinnTextureAtlas = null
     }
 
 }

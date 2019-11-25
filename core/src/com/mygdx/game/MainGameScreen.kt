@@ -1,14 +1,15 @@
 package com.mygdx.game
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.mygdx.game.Assets.LIVING_ROOM_HEIGHT_F
 import ktx.app.KtxScreen
+
 
 // Width in world units
 const val WIDTH = 750
@@ -21,9 +22,6 @@ const val MAX_RATIO = 19.5f / 9f
 const val MIN_HEIGHT_F = WIDTH_F * MIN_RATIO
 const val MAX_HEIGHT_F = WIDTH_F * MAX_RATIO
 
-const val MIN_HEIGHT = MIN_HEIGHT_F.toInt()
-const val MAX_HEIGHT = MAX_HEIGHT_F.toInt()
-
 class MainGameScreen(val game: Game) : KtxScreen {
     //I denne klassen foregår ca alt. Det er tre tilstander, før spelet begynner(katten sitter på bakken), i lufta mens spelet pågår
     //og etter at katten har krasja og me har tapt
@@ -35,10 +33,6 @@ class MainGameScreen(val game: Game) : KtxScreen {
         //vis ein skjerm/popupmeny som viser score og knapper for å prøve igjen
 
     }
-
-
-
-
 
     private val batch = SpriteBatch()
     private val pusefinn = Pusefinn()
@@ -61,6 +55,7 @@ class MainGameScreen(val game: Game) : KtxScreen {
 
     private val shape = ShapeRenderer()
 
+
     override fun resize(width: Int, height: Int) {
         viewport.update(width, height, true)
     }
@@ -71,9 +66,19 @@ class MainGameScreen(val game: Game) : KtxScreen {
     }
 
     private fun update(delta: Float) {
-        if (Gdx.input.justTouched()) { // is called one time when screen is touched
+        /*if (Gdx.input.justTouched()) { // is called one time when screen is touched
             val pusVals = Pusefinn.FinnState.values()
             pusefinn.state = pusVals[(pusefinn.state.ordinal + 1) % pusVals.size]
+        }*/
+        handleInput()
+    }
+
+    private fun handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            camera.translate(0f, -3f, 0f)
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            camera.translate(0f, 3f, 0f)
         }
     }
 
@@ -82,7 +87,8 @@ class MainGameScreen(val game: Game) : KtxScreen {
         game.batch.projectionMatrix = camera.combined
         game.batch.begin()
 
-        game.batch.draw(Assets.backgroundRegion, 0f, 0f, WIDTH_F, LIVING_ROOM_HEIGHT_F)
+        //game.batch.draw(Assets.livingRoomRegion, 0f, 0f, WIDTH_F, LIVING_ROOM_HEIGHT_F)
+        Level1.draw(camera, game.batch)
         pusefinn.getSprite()?.let {
             it.setPosition(pusefinn.x, pusefinn.y)
             it.draw(game.batch)
@@ -90,8 +96,7 @@ class MainGameScreen(val game: Game) : KtxScreen {
 
         game.batch.end()
 
-
-        // This is the world
+        // This is the world, comment out later
         shape.projectionMatrix = camera.combined
         shape.begin(ShapeRenderer.ShapeType.Line)
         shape.color = Color.RED

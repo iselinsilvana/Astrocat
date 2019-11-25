@@ -66,19 +66,26 @@ class MainGameScreen(val game: Game) : KtxScreen {
     }
 
     private fun update(delta: Float) {
-        /*if (Gdx.input.justTouched()) { // is called one time when screen is touched
-            val pusVals = Pusefinn.FinnState.values()
-            pusefinn.state = pusVals[(pusefinn.state.ordinal + 1) % pusVals.size]
-        }*/
         handleInput()
     }
 
     private fun handleInput() {
+        val cameraBottom = camera.position.y - camera.viewportHeight / 2
+        val cameraTop = camera.position.y + camera.viewportHeight / 2
+
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.translate(0f, -3f, 0f)
+            val translation = -10f
+
+            if (cameraBottom + translation >= 0f){
+                camera.translate(0f, translation, 0f)
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.translate(0f, 3f, 0f)
+            val translation = 10f
+
+            if (cameraTop + translation <= Level1.topY){
+                camera.translate(0f, translation, 0f)
+            }
         }
     }
 
@@ -87,7 +94,6 @@ class MainGameScreen(val game: Game) : KtxScreen {
         game.batch.projectionMatrix = camera.combined
         game.batch.begin()
 
-        //game.batch.draw(Assets.livingRoomRegion, 0f, 0f, WIDTH_F, LIVING_ROOM_HEIGHT_F)
         Level1.draw(camera, game.batch)
         pusefinn.getSprite()?.let {
             it.setPosition(pusefinn.x, pusefinn.y)

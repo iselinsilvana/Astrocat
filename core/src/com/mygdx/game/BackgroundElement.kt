@@ -15,7 +15,7 @@ import com.mygdx.game.Assets.sky6Region
 import com.mygdx.game.Assets.sky7EarthRegion
 import com.mygdx.game.Assets.sky8Region
 
-abstract class BackgroundElement() {
+abstract class BackgroundElement {
     abstract val width: Float
     abstract val height: Float
     val x = 0f
@@ -84,6 +84,8 @@ object Sky8 : Sky() {
 }
 
 class BackgroundList(private val backgroundElements: List<BackgroundElement>) {
+    val topY: Float
+
     init {
         var currentY = 0f
 
@@ -91,6 +93,8 @@ class BackgroundList(private val backgroundElements: List<BackgroundElement>) {
             it.y = currentY
             currentY += it.height
         }
+
+        topY = backgroundElements.last().y + backgroundElements.last().height
     }
 
     fun draw(camera: Camera, batch: SpriteBatch) {
@@ -98,4 +102,5 @@ class BackgroundList(private val backgroundElements: List<BackgroundElement>) {
             it.draw(camera, batch)
         }
     }
+
 }

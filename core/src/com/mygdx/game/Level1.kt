@@ -16,6 +16,8 @@ object Level1 {
                     Sky7Earth,
                     Sky8))
 
+    val topY = backgroundElements.topY
+
     fun draw(camera: Camera, batch: SpriteBatch) {
         backgroundElements.draw(camera, batch)
     }

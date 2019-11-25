@@ -2,7 +2,6 @@ package com.mygdx.game
 
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
 
 
 const val PUSEFINN_W_F = 535f

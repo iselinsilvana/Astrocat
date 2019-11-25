@@ -91,10 +91,13 @@ class MainGameScreen(val game: Game) : KtxScreen {
 
     private fun draw(){
         camera.update()
+
+        Level1.draw(camera, game.batch, shape)
+
         game.batch.projectionMatrix = camera.combined
         game.batch.begin()
 
-        Level1.draw(camera, game.batch)
+
         pusefinn.getSprite()?.let {
             it.setPosition(pusefinn.x, pusefinn.y)
             it.draw(game.batch)

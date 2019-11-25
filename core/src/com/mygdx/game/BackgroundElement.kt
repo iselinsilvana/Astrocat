@@ -24,14 +24,7 @@ abstract class BackgroundElement {
 
     fun draw(camera: Camera, batch: SpriteBatch) {
         asset?.let {
-            val cameraTopY = camera.position.y + camera.viewportHeight / 2
-            val cameraBottomY = camera.position.y - camera.viewportHeight / 2
-            val bgBottomY = y
-            val bgTopY = y + height
-
-            if (bgBottomY in cameraBottomY..cameraTopY
-                    || bgTopY in cameraBottomY..cameraTopY
-                    || (bgBottomY <= cameraBottomY && bgTopY >= cameraTopY)) {
+            if (camera.hasVerticalOverlap(y, y + height)) {
                 batch.draw(it, x, y, width, height)
             }
         }

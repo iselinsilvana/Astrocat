@@ -70,8 +70,14 @@ class MainGameScreen(val game: Game) : KtxScreen {
     private fun handleInput() {
         val cameraBottom = camera.position.y - camera.viewportHeight / 2
         val cameraTop = camera.position.y + camera.viewportHeight / 2
-
+        
         if (Gdx.input.isTouched) {
+            if (pusefinn.state == Pusefinn.FinnState.SITTING) {
+                Assets.launchSound?.play(0.5f)
+            } else if (pusefinn.state == Pusefinn.FinnState.FALLING) {
+                Assets.bounceSound?.play(1.0f)
+            }
+
             val translation = 10f
 
             if (cameraTop + translation <= Level1.topY){

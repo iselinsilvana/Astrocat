@@ -25,6 +25,8 @@ object Assets {
     var puseFinnSitting: Sprite? = null
     var puseFinnLaunching: Sprite? = null
 
+    private const val LIVING_ROOM_HEIGHT = 1372
+
     private var puseFinnTextureAtlas: TextureAtlas? = null
 
 
@@ -33,7 +35,7 @@ object Assets {
         assetManager.load<Texture>("livingroom.png")
         assetManager.finishLoading()
         background = assetManager.get("livingroom.png", Texture::class.java)
-        backgroundRegion = TextureRegion(background, 0, 0, WIDTH, HEIGHT)
+        backgroundRegion = TextureRegion(background, 0, 0, WIDTH, LIVING_ROOM_HEIGHT)
 
         val puseFinnTextureAtlas = TextureAtlas("sprites.txt")
         puseFinnFalling = puseFinnTextureAtlas.createSprite("pus_KattGoingDown")

@@ -5,12 +5,11 @@ import org.robovm.apple.uikit.UIApplication
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration
-import com.mygdx.game.FlyPusefinnFlyGame
 
 class IOSLauncher : IOSApplication.Delegate() {
     override fun createApplication(): IOSApplication {
         val config = IOSApplicationConfiguration()
-        return IOSApplication(FlyPusefinnFlyGame(), config)
+        return IOSApplication(Game(), config)
     }
 
     companion object {

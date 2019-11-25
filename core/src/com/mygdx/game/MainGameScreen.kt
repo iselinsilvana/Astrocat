@@ -1,12 +1,13 @@
 package com.mygdx.game
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.badlogic.gdx.utils.viewport.FillViewport
-import com.badlogic.gdx.utils.viewport.ScreenViewport
+import com.mygdx.game.Assets.LIVING_ROOM_HEIGHT_F
 import ktx.app.KtxScreen
 
 // Width in world units
@@ -36,27 +37,32 @@ class MainGameScreen(val game: Game) : KtxScreen {
     }
 
 
-    private val widthPx = Gdx.graphics.width.toFloat()
-    private val heightPx = Gdx.graphics.height.toFloat()
+
+
 
     private val batch = SpriteBatch()
     private val pusefinn = Pusefinn()
 
     private var hughscore: String? = null
 
-    private val actualRatio = MathUtils.clamp(heightPx / widthPx, MIN_RATIO, MAX_RATIO)
-    private val height = WIDTH_F * actualRatio
+    private val widthPx : Float get() = Gdx.graphics.width.toFloat()
+    private val heightPx : Float get() = Gdx.graphics.height.toFloat()
+
+    private val actualRatio : Float get() = MathUtils.clamp(heightPx / widthPx, MIN_RATIO, MAX_RATIO)
+    private val height : Float get() =  WIDTH_F * actualRatio
 
     private val camera = OrthographicCamera(WIDTH_F, WIDTH_F * actualRatio).apply {
-        position.set((WIDTH / 2f), (height / 2f), 0f)
+        position.set(viewportWidth / 2f, viewportHeight / 2f, 0f)
     }
 
     private val viewport = ExtendViewport(WIDTH_F, MIN_HEIGHT_F, WIDTH_F, MAX_HEIGHT_F, camera)
 
     private var gameOver = false
 
+    private val shape = ShapeRenderer()
+
     override fun resize(width: Int, height: Int) {
-        viewport.update(width, height)
+        viewport.update(width, height, true)
     }
 
     override fun render(delta: Float) {
@@ -75,13 +81,22 @@ class MainGameScreen(val game: Game) : KtxScreen {
         camera.update()
         game.batch.projectionMatrix = camera.combined
         game.batch.begin()
-        game.batch.draw(Assets.backgroundRegion, 0f, 0f, WIDTH_F, height)
+
+        game.batch.draw(Assets.backgroundRegion, 0f, 0f, WIDTH_F, LIVING_ROOM_HEIGHT_F)
         pusefinn.getSprite()?.let {
             it.setPosition(pusefinn.x, pusefinn.y)
             it.draw(game.batch)
         }
 
         game.batch.end()
+
+
+        // This is the world
+        shape.projectionMatrix = camera.combined
+        shape.begin(ShapeRenderer.ShapeType.Line)
+        shape.color = Color.RED
+        shape.rect(0f, 0f, WIDTH_F - 1, height - 1)
+        shape.end()
     }
 
 

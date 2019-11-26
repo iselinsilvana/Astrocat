@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ktx.assets.load
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Sound
 
 
 object Assets {
@@ -55,6 +57,9 @@ object Assets {
 
     private var puseFinnTextureAtlas: TextureAtlas? = null
 
+    var launchSound: Sound? = null
+    var bounceSound: Sound? = null
+
     // TODO make this async
     fun load(assetManager: AssetManager){
         with(assetManager){
@@ -67,6 +72,8 @@ object Assets {
             load<Texture>("sky6.png")
             load<Texture>("sky7_earth.png")
             load<Texture>("sky8.png")
+            load<Sound>("launch.wav")
+            load<Sound>("bounce.wav")
             finishLoading()
         }
 
@@ -101,6 +108,9 @@ object Assets {
         puseFinnFalling = puseFinnTextureAtlas.createSprite("pus_KattGoingDown")
         puseFinnSitting = puseFinnTextureAtlas.createSprite("pus_KattSit")
         puseFinnLaunching = puseFinnTextureAtlas.createSprite("pus_KattGoingUp")
+
+        launchSound = assetManager.get("launch.wav", Sound::class.java)
+        bounceSound = assetManager.get("bounce.wav", Sound::class.java)
     }
 
     fun dispose(){
@@ -134,8 +144,15 @@ object Assets {
         puseFinnFalling = null
         puseFinnSitting = null
         puseFinnLaunching = null
+
         puseFinnTextureAtlas?.dispose()
         puseFinnTextureAtlas = null
+
+        launchSound?.dispose()
+        launchSound = null
+
+        bounceSound?.dispose()
+        bounceSound = null
     }
 
 }

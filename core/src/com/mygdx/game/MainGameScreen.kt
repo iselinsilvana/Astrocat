@@ -1,8 +1,6 @@
 package com.mygdx.game
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -72,45 +70,38 @@ class MainGameScreen(val game: Game) : KtxScreen {
     private fun handleInput() {
         val cameraBottom = camera.position.y - camera.viewportHeight / 2
         val cameraTop = camera.position.y + camera.viewportHeight / 2
-
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            val translation = -10f
-
-            if (cameraBottom + translation >= 0f){
-                camera.translate(0f, translation, 0f)
+        
+        if (Gdx.input.isTouched) {
+            if (pusefinn.state == Pusefinn.FinnState.SITTING) {
+                Assets.launchSound?.play(0.5f)
+            } else if (pusefinn.state == Pusefinn.FinnState.FALLING) {
+                Assets.bounceSound?.play(1.0f)
             }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+
             val translation = 10f
 
             if (cameraTop + translation <= Level1.topY){
+                pusefinn.state = Pusefinn.FinnState.LAUNCHING
+                pusefinn.y += translation
                 camera.translate(0f, translation, 0f)
             }
+        } else if (pusefinn.y > 0f) {
+            val translation = -5f
+
+            if (cameraBottom + translation >= 0f){
+                pusefinn.state = Pusefinn.FinnState.FALLING
+                pusefinn.y += translation
+                camera.translate(0f, translation, 0f)
+            }
+        } else {
+            pusefinn.state = Pusefinn.FinnState.SITTING
         }
     }
 
     private fun draw(){
         camera.update()
-
         Level1.draw(camera, game.batch, shape)
-
-        game.batch.projectionMatrix = camera.combined
-        game.batch.begin()
-
-
-        pusefinn.getSprite()?.let {
-            it.setPosition(pusefinn.x, pusefinn.y)
-            it.draw(game.batch)
-        }
-
-        game.batch.end()
-
-        // This is the world, comment out later
-        shape.projectionMatrix = camera.combined
-        shape.begin(ShapeRenderer.ShapeType.Line)
-        shape.color = Color.RED
-        shape.rect(0f, 0f, WIDTH_F - 1, height - 1)
-        shape.end()
+        pusefinn.draw(camera, game.batch)
     }
 
 

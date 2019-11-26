@@ -1,11 +1,13 @@
 package com.mygdx.game
 
+import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Actor
 
 
-const val PUSEFINN_W_F = 535f
-const val PUSEFINN_H_F = 781f
+private const val PUSEFINN_W_F = 535f
+private const val PUSEFINN_SCALE = 0.5f
 
 class Pusefinn: Actor() {
 
@@ -20,9 +22,22 @@ class Pusefinn: Actor() {
         y = 0f
     }
 
-    fun getSprite(): Sprite? = when(state){
+    private fun getSprite(): Sprite? = when(state){
         FinnState.SITTING -> Assets.puseFinnSitting
         FinnState.LAUNCHING -> Assets.puseFinnLaunching
         FinnState.FALLING -> Assets.puseFinnFalling
+    }
+
+    fun draw(camera: Camera, batch: SpriteBatch) {
+        with(batch) {
+            projectionMatrix = camera.combined
+            begin()
+            getSprite()?.let {
+                it.setScale(PUSEFINN_SCALE)
+                it.setPosition(x, y)
+                it.draw(batch)
+            }
+            end()
+        }
     }
 }

@@ -35,7 +35,7 @@ class MainGameScreen(val game: Game) : KtxScreen {
     private val batch = SpriteBatch()
     private val pusefinn = Pusefinn()
 
-    private var hughscore: String? = null
+    private var highScore: String? = null
 
     private val widthPx : Float get() = Gdx.graphics.width.toFloat()
     private val heightPx : Float get() = Gdx.graphics.height.toFloat()
@@ -72,12 +72,7 @@ class MainGameScreen(val game: Game) : KtxScreen {
         val cameraTop = camera.position.y + camera.viewportHeight / 2
         
         if (Gdx.input.isTouched) {
-            if (pusefinn.state == Pusefinn.FinnState.SITTING) {
-                Assets.launchSound?.play(0.5f)
-            } else if (pusefinn.state == Pusefinn.FinnState.FALLING) {
-                Assets.bounceSound?.play(1.0f)
-            }
-
+            pusefinn.playSound()
             val translation = 10f
 
             if (cameraTop + translation <= Level1.topY){
@@ -93,9 +88,9 @@ class MainGameScreen(val game: Game) : KtxScreen {
                 pusefinn.y += translation
                 camera.translate(0f, translation, 0f)
             }
-        } else {
+        } /*else {
             pusefinn.state = Pusefinn.FinnState.SITTING
-        }
+        }*/
     }
 
     private fun draw(){

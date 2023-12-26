@@ -28,6 +28,14 @@ class Pusefinn: Actor() {
         FinnState.FALLING -> Assets.puseFinnFalling
     }
 
+    fun playSound() {
+        if (state == Pusefinn.FinnState.SITTING) {
+            Assets.launchSound?.play(0.5f)
+        } else if (state == Pusefinn.FinnState.FALLING) {
+            Assets.bounceSound?.play(1.0f)
+        }
+    }
+
     fun draw(camera: Camera, batch: SpriteBatch) {
         with(batch) {
             projectionMatrix = camera.combined

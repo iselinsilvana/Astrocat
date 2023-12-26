@@ -30,7 +30,15 @@ class MainGameScreen(val game: Game) : KtxScreen {
     private fun gameOver() {
         //vis ein skjerm/popupmeny som viser score og knapper for å prøve igjen
 
-        // trur eg må oppdatere draw og sånt sånn at dei stopper å oppdatere?
+        // foreløbig gjer eg sånn at eg berre resetter alt til start
+        hasReleasedTouch = true
+        pusefinn.let {
+            it.state = Pusefinn.FinnState.SITTING
+            it.resetPosition()
+        }
+        camera.apply {
+            position.set(viewportWidth / 2f, viewportHeight / 2f, 0f)
+        }
     }
 
     private val batch = SpriteBatch()
@@ -52,9 +60,10 @@ class MainGameScreen(val game: Game) : KtxScreen {
 
     private val viewport = ExtendViewport(WIDTH_F, MIN_HEIGHT_F, WIDTH_F, MAX_HEIGHT_F, camera)
 
-    private var gameOver = false
-
     private val shape = ShapeRenderer()
+
+    private fun isCatBelowView() : Boolean = (pusefinn.y - (camera.position.y - height)) < 0f
+
 
 
     override fun resize(width: Int, height: Int) {
@@ -81,6 +90,8 @@ class MainGameScreen(val game: Game) : KtxScreen {
             pusefinn.state = Pusefinn.FinnState.LAUNCHING
             val cameraTranslation = 5f
             camera.translate(0f, cameraTranslation, 0f)
+        } else if (isCatBelowView()) {
+            gameOver()
         } else if (pusefinn.y > 0f) {
             hasReleasedTouch = true
             pusefinn.state = Pusefinn.FinnState.FALLING

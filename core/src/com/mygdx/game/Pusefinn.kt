@@ -16,12 +16,18 @@ class Pusefinn: Actor() {
     }
 
     var state = FinnState.SITTING
-    var currentSpeed = 0f
+    private var currentSpeed = 0f
     private val gravitationalConstant = -2000f
 
    init {
+        resetPosition()
+    }
+
+    fun resetPosition() {
         x = (WIDTH_F / 2f) - (PUSEFINN_W_F / 2f)
         y = 0f
+        state = FinnState.SITTING
+        currentSpeed = 0f
     }
 
     private fun getSprite(): Sprite? = when(state){

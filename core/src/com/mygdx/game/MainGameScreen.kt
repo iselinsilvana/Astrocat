@@ -27,13 +27,16 @@ class MainGameScreen(val game: Game) : KtxScreen {
     //for å tape: pusefinn er under høgda til skjermen, negativ y-verdi. då utløser me funksjonen game over
 
 
-    fun gameOver() {
+    private fun gameOver() {
         //vis ein skjerm/popupmeny som viser score og knapper for å prøve igjen
 
+        // trur eg må oppdatere draw og sånt sånn at dei stopper å oppdatere?
     }
 
     private val batch = SpriteBatch()
     private val pusefinn = Pusefinn()
+
+    private var hasReleasedTouch = true
 
     private var highScore: String? = null
 
@@ -65,32 +68,26 @@ class MainGameScreen(val game: Game) : KtxScreen {
 
     private fun update(delta: Float) {
         handleInput()
+        pusefinn.getTranslation(delta)
     }
 
     private fun handleInput() {
-        val cameraBottom = camera.position.y - camera.viewportHeight / 2
-        val cameraTop = camera.position.y + camera.viewportHeight / 2
-        
         if (Gdx.input.isTouched) {
+            if (hasReleasedTouch) {
+                pusefinn.giveExtraPush()
+            }
+            hasReleasedTouch = false
             pusefinn.playSound()
-            val translation = 10f
-
-            if (cameraTop + translation <= Level1.topY){
-                pusefinn.state = Pusefinn.FinnState.LAUNCHING
-                pusefinn.y += translation
-                camera.translate(0f, translation, 0f)
-            }
+            pusefinn.state = Pusefinn.FinnState.LAUNCHING
+            val cameraTranslation = 5f
+            camera.translate(0f, cameraTranslation, 0f)
         } else if (pusefinn.y > 0f) {
-            val translation = -5f
-
-            if (cameraBottom + translation >= 0f){
-                pusefinn.state = Pusefinn.FinnState.FALLING
-                pusefinn.y += translation
-                camera.translate(0f, translation, 0f)
-            }
-        } /*else {
+            hasReleasedTouch = true
+            pusefinn.state = Pusefinn.FinnState.FALLING
+        } else {
+            hasReleasedTouch = true
             pusefinn.state = Pusefinn.FinnState.SITTING
-        }*/
+        }
     }
 
     private fun draw(){

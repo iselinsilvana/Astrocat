@@ -16,6 +16,8 @@ class Pusefinn: Actor() {
     }
 
     var state = FinnState.SITTING
+    var currentSpeed = 0f
+    private val gravitationalConstant = -2000f
 
    init {
         x = (WIDTH_F / 2f) - (PUSEFINN_W_F / 2f)
@@ -26,6 +28,21 @@ class Pusefinn: Actor() {
         FinnState.SITTING -> Assets.puseFinnSitting
         FinnState.LAUNCHING -> Assets.puseFinnLaunching
         FinnState.FALLING -> Assets.puseFinnFalling
+    }
+
+    fun giveExtraPush() {
+        currentSpeed = 1500f
+    }
+
+    fun getTranslation(delta: Float) {
+        when (state) {
+            FinnState.SITTING -> y = 0f
+            else ->  {
+                val newSpeed = currentSpeed + gravitationalConstant * delta
+                y += 0.5f * (currentSpeed + newSpeed) * delta
+                currentSpeed = newSpeed
+            }
+        }
     }
 
     fun playSound() {

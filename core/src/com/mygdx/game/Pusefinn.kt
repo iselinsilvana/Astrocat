@@ -1,8 +1,7 @@
 package com.mygdx.game
 
-import com.badlogic.gdx.graphics.Camera
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.Sprite
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Actor
 
 
@@ -24,6 +23,8 @@ class Pusefinn: Actor() {
     }
 
     fun resetPosition() {
+        height = PUSEFINN_W_F
+        width = 781f
         x = (WIDTH_F / 2f) - (PUSEFINN_W_F / 2f)
         y = 0f
         state = FinnState.SITTING
@@ -52,16 +53,24 @@ class Pusefinn: Actor() {
     }
 
     fun playSound() {
-        if (state == Pusefinn.FinnState.SITTING) {
+        if (state == FinnState.SITTING) {
             Assets.launchSound?.play(0.5f)
-        } else if (state == Pusefinn.FinnState.FALLING) {
+        } else if (state == FinnState.FALLING) {
             Assets.bounceSound?.play(1.0f)
         }
     }
 
-    fun draw(camera: Camera, batch: SpriteBatch) {
+    fun isTouchingCat(inputX: Int, inputY: Int) {
+        val isWithinXRange = inputX >= x && inputX <= (x + width)
+        val isWithinYRange = inputY >= y && inputY <= (y + height)
+        val isTouching = isWithinXRange && isWithinYRange
+        println("height: $height, width: $ $width")
+        println("W_F: $PUSEFINN_W_F")
+        println(" input x: $inputX, x: $x, x + width: ${x + PUSEFINN_W_F}. input y: $inputY, y: $y, y + height: ${y + 500f}. is touching cat: $isTouching")
+    }
+
+    override fun draw(batch: Batch, parentAlpha: Float) {
         with(batch) {
-            projectionMatrix = camera.combined
             begin()
             getSprite()?.let {
                 it.setScale(PUSEFINN_SCALE)

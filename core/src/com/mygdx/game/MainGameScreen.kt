@@ -82,6 +82,9 @@ class MainGameScreen(val game: Game) : KtxScreen {
 
     private fun handleInput() {
         if (Gdx.input.isTouched) {
+            val inputX = Gdx.input.x
+            val inputY = Gdx.input.y
+            pusefinn.isTouchingCat(inputX, inputY)
             if (hasReleasedTouch) {
                 pusefinn.giveExtraPush()
             }
@@ -104,7 +107,7 @@ class MainGameScreen(val game: Game) : KtxScreen {
     private fun draw(){
         camera.update()
         Level1.draw(camera, game.batch, shape)
-        pusefinn.draw(camera, game.batch)
+        pusefinn.draw(game.batch, 1f)
     }
 
 

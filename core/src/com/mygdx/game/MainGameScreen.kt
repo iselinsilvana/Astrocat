@@ -2,9 +2,10 @@ package com.mygdx.game
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ktx.app.KtxScreen
 
@@ -40,9 +41,7 @@ class MainGameScreen(val game: Game) : KtxScreen {
             position.set(viewportWidth / 2f, viewportHeight / 2f, 0f)
         }
     }
-
-    private val batch = SpriteBatch()
-    private val pusefinn = Pusefinn()
+    private val pusefinn = Pusefinn().apply { touchable = Touchable.enabled }
 
     private var hasReleasedTouch = true
 
@@ -59,32 +58,42 @@ class MainGameScreen(val game: Game) : KtxScreen {
     }
 
     private val viewport = ExtendViewport(WIDTH_F, MIN_HEIGHT_F, WIDTH_F, MAX_HEIGHT_F, camera)
+    private val stage = Stage(viewport)
 
     private val shape = ShapeRenderer()
+
+    init {
+        Gdx.input.inputProcessor = stage
+        stage.addActor(pusefinn)
+    }
 
     private fun isCatBelowView() : Boolean = (pusefinn.y - (camera.position.y - height)) < 0f
 
 
 
     override fun resize(width: Int, height: Int) {
-        viewport.update(width, height, true)
+        stage.viewport.update(width, height, true)
     }
 
     override fun render(delta: Float) {
-        update(delta)
+        //må finne ein bedre plass for dette
+        //val cameraTranslation = 5f
+        //camera.translate(0f, cameraTranslation, 0f)
+        stage.act()
         draw()
     }
 
     private fun update(delta: Float) {
         handleInput()
         pusefinn.getTranslation(delta)
+
     }
 
     private fun handleInput() {
         if (Gdx.input.isTouched) {
             val inputX = Gdx.input.x
             val inputY = Gdx.input.y
-            pusefinn.isTouchingCat(inputX, inputY)
+            //pusefinn.isTouchingCat(inputX, inputY)
             if (hasReleasedTouch) {
                 pusefinn.giveExtraPush()
             }
@@ -108,11 +117,5 @@ class MainGameScreen(val game: Game) : KtxScreen {
         camera.update()
         Level1.draw(camera, game.batch, shape)
         pusefinn.draw(game.batch, 1f)
-    }
-
-
-    override fun dispose() {
-        batch.dispose()
-        super.dispose()
     }
 }

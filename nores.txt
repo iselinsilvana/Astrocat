@@ -1,4 +1,4 @@
-26. desember 2023
+desember 2023
 - no er det sånn at pusefinn sår i ro og kameraet beveger på seg.
 siden eg ikkje vil at dei alltid skal vere heilt i sync, må eg prøve å bevere pusefinn uavhengig.
 eg begynner med å deaktivere at kameraet flytter seg når eg beveger meg oppover og prøver å flytte kun pusefinn når eg trykker på han
@@ -6,6 +6,14 @@ eg begynner med å deaktivere at kameraet flytter seg når eg beveger meg oppove
 x flytte kameraet oppover litt, men saktere enn katten
 x gjere sånn at når ein trykker på katten får me eit hopp, og ikkje at ein kan holde inne
 x lage ein resettknapp
-- detektere kor ein trykker og om det er på katten
+-> detektere kor ein trykker og om det er på katten
+    x må finne ut korleis eg detekterer x og y-koordinatene til inputen
+    x er klikket inni boksen?
+    -> finne ut ein slags boks for omrisset til katten
+    -> koffor er ikkje height og width faktisk høgden og breidden til katten?
+- gjere sånn at katten kan hoppe skeivt
+    - finne avstand mellom klikk og senter av x aksen til katten
+    - lage ein slags x-fart ut ifrå det?
+    - gjere sånn at katten ikkje kan gå forbi kantene på skjermen
 - fikse sånn at ein kan endre på størrelsen?
 - gjere sånn at kameraet berre flytter seg i eit sekund eller noke, ikkje heile tida mens me trykker inn

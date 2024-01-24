@@ -7,7 +7,7 @@ import ktx.app.KtxScreen
 
 class Game : KtxGame<KtxScreen>() {
     lateinit var batch: SpriteBatch
-    lateinit var assetManager: AssetManager
+    private lateinit var assetManager: AssetManager
 
     override fun create() {
         assetManager = AssetManager()

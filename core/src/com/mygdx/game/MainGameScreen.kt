@@ -83,36 +83,6 @@ class MainGameScreen(val game: Game) : KtxScreen {
         draw()
     }
 
-    private fun update(delta: Float) {
-        handleInput()
-        pusefinn.getTranslation(delta)
-
-    }
-
-    private fun handleInput() {
-        if (Gdx.input.isTouched) {
-            val inputX = Gdx.input.x
-            val inputY = Gdx.input.y
-            //pusefinn.isTouchingCat(inputX, inputY)
-            if (hasReleasedTouch) {
-                pusefinn.giveExtraPush()
-            }
-            hasReleasedTouch = false
-            pusefinn.playSound()
-            pusefinn.state = Pusefinn.FinnState.LAUNCHING
-            val cameraTranslation = 5f
-            camera.translate(0f, cameraTranslation, 0f)
-        } else if (isCatBelowView()) {
-            gameOver()
-        } else if (pusefinn.y > 0f) {
-            hasReleasedTouch = true
-            pusefinn.state = Pusefinn.FinnState.FALLING
-        } else {
-            hasReleasedTouch = true
-            pusefinn.state = Pusefinn.FinnState.SITTING
-        }
-    }
-
     private fun draw(){
         camera.update()
         Level1.draw(camera, game.batch, shape)

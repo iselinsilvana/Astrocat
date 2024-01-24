@@ -9,8 +9,10 @@ x lage ein resettknapp
 -> detektere kor ein trykker og om det er på katten
     x må finne ut korleis eg detekterer x og y-koordinatene til inputen
     x er klikket inni boksen?
-    -> finne ut ein slags boks for omrisset til katten
-    -> koffor er ikkje height og width faktisk høgden og breidden til katten?
+    - finne ut ein slags boks for omrisset til katten
+    - koffor er ikkje height og width faktisk høgden og breidden til katten?
+    -> korleis setter me katten akkurat der som den gjer, korleis kan eg få y-posisjonen
+    - eg må lese om koordinatsystemene
 - gjere sånn at katten kan hoppe skeivt
     - finne avstand mellom klikk og senter av x aksen til katten
     - lage ein slags x-fart ut ifrå det?

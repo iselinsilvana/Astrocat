@@ -1,13 +1,11 @@
 package com.mygdx.game
 
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ktx.assets.load
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.audio.Sound
 
 
 object Assets {
@@ -46,16 +44,17 @@ object Assets {
     var sky7EarthRegion: TextureRegion? = null
 
     var sky8: Texture? = null
-    var sky8Region: TextureRegion? = null    
-    
-    var puseFinnFalling: Sprite? = null
-    var puseFinnSitting: Sprite? = null
-    var puseFinnLaunching: Sprite? = null
+    var sky8Region: TextureRegion? = null
+
+    private val pusefinnTextureAtlas: TextureAtlas = TextureAtlas("sprites.txt")
+
+    val pusefinnFallingTexture: TextureRegion = pusefinnTextureAtlas.findRegion("pus_KattGoingDown")
+    val pusefinnSittingTexture: TextureRegion = pusefinnTextureAtlas.findRegion("pus_KattSit")
+    val pusefinnLaunchingTexture: TextureRegion = pusefinnTextureAtlas.findRegion("pus_KattGoingUp")
 
     const val LIVING_ROOM_HEIGHT_F = 1372f
     const val SKY_HEIGHT_F = 1624f
-
-    private var puseFinnTextureAtlas: TextureAtlas? = null
+    const val WIDTH_INT = 750
 
     var launchSound: Sound? = null
     var bounceSound: Sound? = null
@@ -78,36 +77,31 @@ object Assets {
         }
 
         livingRoom = assetManager.get("livingroom.png", Texture::class.java)
-        livingRoomRegion = TextureRegion(livingRoom, 0, 0, WIDTH, LIVING_ROOM_HEIGHT_F.toInt())
+        livingRoomRegion = TextureRegion(livingRoom, 0, 0, WIDTH_INT, LIVING_ROOM_HEIGHT_F.toInt())
         
         sky1 = assetManager.get("sky1.png", Texture::class.java)
-        sky1Region = TextureRegion(sky1, 0, 0, WIDTH, SKY_HEIGHT_F.toInt())
+        sky1Region = TextureRegion(sky1, 0, 0, WIDTH_INT, SKY_HEIGHT_F.toInt())
 
         sky2Gradient = assetManager.get("sky2_gradient.png", Texture::class.java)
-        sky2GradientRegion = TextureRegion(sky2Gradient, 0, 0, WIDTH, SKY_HEIGHT_F.toInt())
+        sky2GradientRegion = TextureRegion(sky2Gradient, 0, 0, WIDTH_INT, SKY_HEIGHT_F.toInt())
 
         sky3 = assetManager.get("sky3.png", Texture::class.java)
-        sky3Region = TextureRegion(sky3, 0, 0, WIDTH, SKY_HEIGHT_F.toInt())
+        sky3Region = TextureRegion(sky3, 0, 0, WIDTH_INT, SKY_HEIGHT_F.toInt())
 
         sky4Gradient = assetManager.get("sky4_gradient.png", Texture::class.java)
-        sky4GradientRegion = TextureRegion(sky4Gradient, 0, 0, WIDTH, SKY_HEIGHT_F.toInt())
+        sky4GradientRegion = TextureRegion(sky4Gradient, 0, 0, WIDTH_INT, SKY_HEIGHT_F.toInt())
 
         sky5 = assetManager.get("sky5.png", Texture::class.java)
-        sky5Region = TextureRegion(sky5, 0, 0, WIDTH, SKY_HEIGHT_F.toInt())
+        sky5Region = TextureRegion(sky5, 0, 0, WIDTH_INT, SKY_HEIGHT_F.toInt())
 
         sky6 = assetManager.get("sky6.png", Texture::class.java)
-        sky6Region = TextureRegion(sky6, 0, 0, WIDTH, SKY_HEIGHT_F.toInt())
+        sky6Region = TextureRegion(sky6, 0, 0, WIDTH_INT, SKY_HEIGHT_F.toInt())
 
         sky7Earth = assetManager.get("sky7_earth.png", Texture::class.java)
-        sky7EarthRegion = TextureRegion(sky7Earth, 0, 0, WIDTH, SKY_HEIGHT_F.toInt())
+        sky7EarthRegion = TextureRegion(sky7Earth, 0, 0, WIDTH_INT, SKY_HEIGHT_F.toInt())
 
         sky8 = assetManager.get("sky8.png", Texture::class.java)
-        sky8Region = TextureRegion(sky8, 0, 0, WIDTH, SKY_HEIGHT_F.toInt())
-
-        val puseFinnTextureAtlas = TextureAtlas("sprites.txt")
-        puseFinnFalling = puseFinnTextureAtlas.createSprite("pus_KattGoingDown")
-        puseFinnSitting = puseFinnTextureAtlas.createSprite("pus_KattSit")
-        puseFinnLaunching = puseFinnTextureAtlas.createSprite("pus_KattGoingUp")
+        sky8Region = TextureRegion(sky8, 0, 0, WIDTH_INT, SKY_HEIGHT_F.toInt())
 
         launchSound = assetManager.get("launch.wav", Sound::class.java)
         bounceSound = assetManager.get("bounce.wav", Sound::class.java)
@@ -140,13 +134,8 @@ object Assets {
 
         sky8 = null
         sky8Region = null
-        
-        puseFinnFalling = null
-        puseFinnSitting = null
-        puseFinnLaunching = null
 
-        puseFinnTextureAtlas?.dispose()
-        puseFinnTextureAtlas = null
+        pusefinnTextureAtlas.dispose()
 
         launchSound?.dispose()
         launchSound = null

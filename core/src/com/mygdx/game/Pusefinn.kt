@@ -1,14 +1,14 @@
 package com.mygdx.game
 
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 
 
-private const val PUSEFINN_W_F = 535f
 private const val PUSEFINN_SCALE = 0.5f
+private const val SITTING_LEVEL = 150f
 
 class Pusefinn : Actor() {
 
@@ -16,7 +16,9 @@ class Pusefinn : Actor() {
         SITTING, LAUNCHING, FALLING
     }
 
-    var state = FinnState.SITTING
+    private var state = FinnState.SITTING
+    private var region = getTextureRegion()
+
     private var currentSpeed = 0f
     private val gravitationalConstant = -2000f
 
@@ -36,9 +38,8 @@ class Pusefinn : Actor() {
 
     init {
         resetPosition()
-        width = PUSEFINN_W_F
-        height = 781f
-        setBounds((WIDTH_F / 2f) - (PUSEFINN_W_F / 2f), y, width, height)
+        val startingX: Float = (WIDTH_F/2) - (region.regionWidth/4)
+        setBounds(startingX, 50f, region.regionWidth.toFloat() * PUSEFINN_SCALE, region.regionHeight.toFloat() * PUSEFINN_SCALE)
         listeners.add(touchListener)
     }
 
@@ -51,15 +52,15 @@ class Pusefinn : Actor() {
         }
     }
 
-    fun resetPosition() {
+    private fun resetPosition() {
         state = FinnState.SITTING
         currentSpeed = 0f
     }
 
-    private fun getSprite(): Sprite? = when (state) {
-        FinnState.SITTING -> Assets.puseFinnSitting
-        FinnState.LAUNCHING -> Assets.puseFinnLaunching
-        FinnState.FALLING -> Assets.puseFinnFalling
+    private fun getTextureRegion(): TextureRegion = when (state) {
+        FinnState.SITTING -> Assets.pusefinnSittingTexture
+        FinnState.LAUNCHING -> Assets.pusefinnLaunchingTexture
+        FinnState.FALLING -> Assets.pusefinnFallingTexture
     }
 
     fun giveExtraPush() {
@@ -69,11 +70,11 @@ class Pusefinn : Actor() {
     private fun getTranslation(delta: Float) {
         val newSpeed = currentSpeed + gravitationalConstant * delta
         val newY = y + 0.5f * (currentSpeed + newSpeed) * delta
-        if (newY >= 0f) {
+        if (newY >= SITTING_LEVEL) {
             y = newY
             currentSpeed = newSpeed
         } else {
-            y = 0f
+            y = SITTING_LEVEL
             currentSpeed = 0f
         }
     }
@@ -89,11 +90,10 @@ class Pusefinn : Actor() {
     override fun draw(batch: Batch, parentAlpha: Float) {
         with(batch) {
             begin()
-            getSprite()?.let {
-                it.setScale(PUSEFINN_SCALE)
-                it.setPosition(x, y)
-                it.draw(batch)
-            }
+            region = getTextureRegion()
+            batch.draw(region, x, y, originX, originY,
+                width, height, scaleX, scaleY, rotation
+            )
             end()
         }
     }

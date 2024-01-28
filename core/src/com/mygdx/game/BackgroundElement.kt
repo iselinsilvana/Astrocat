@@ -18,7 +18,7 @@ import com.mygdx.game.Assets.sky8Region
 abstract class BackgroundElement {
     abstract val width: Float
     abstract val height: Float
-    val x = 0f
+    private val x = 0f
     var y = 0f
     abstract val asset: TextureRegion?
 
@@ -32,14 +32,14 @@ abstract class BackgroundElement {
 }
 
 object LivingRoom : BackgroundElement() {
-    override val width = WIDTH_F
+    override val width = WIDTH_WORLD_UNITS
     override val height = LIVING_ROOM_HEIGHT_F
     override val asset = livingRoomRegion
 
 }
 
 abstract class Sky : BackgroundElement() {
-    override val width = WIDTH_F
+    override val width = WIDTH_WORLD_UNITS
     override val height = SKY_HEIGHT_F
 }
 

@@ -6,16 +6,22 @@ eg begynner med å deaktivere at kameraet flytter seg når eg beveger meg oppove
 x flytte kameraet oppover litt, men saktere enn katten
 x gjere sånn at når ein trykker på katten får me eit hopp, og ikkje at ein kan holde inne
 x lage ein resettknapp
--> detektere kor ein trykker og om det er på katten
+x detektere kor ein trykker og om det er på katten
     x må finne ut korleis eg detekterer x og y-koordinatene til inputen
     x er klikket inni boksen?
     - finne ut ein slags boks for omrisset til katten
     - koffor er ikkje height og width faktisk høgden og breidden til katten?
     -> korleis setter me katten akkurat der som den gjer, korleis kan eg få y-posisjonen
     - eg må lese om koordinatsystemene
-- gjere sånn at katten kan hoppe skeivt
+    - eg trur eg skjønner litt meir no, eg må kanskje lese meir om viewport, kamera og korleis input funker sammen med dei
+    - burde kanskje rydde litt opp i alle enhetene mine og korleis eg bruker dei
+    - eg trur at roten til problemet mitt er at eg bruker sprite om pusefinn og ikkje texture region
+        - lær meir om forskjellen mellom dei to og prøv å bruke textureregion i steden
+        - eg trur det egentlige problemet var at eg ikkje delte på 2 i setbounds🤦
+-> gjere sånn at katten kan hoppe skeivt
     - finne avstand mellom klikk og senter av x aksen til katten
     - lage ein slags x-fart ut ifrå det?
     - gjere sånn at katten ikkje kan gå forbi kantene på skjermen
+- finne ut ka type viewport eg egentlig vil bruke
 - fikse sånn at ein kan endre på størrelsen?
 - gjere sånn at kameraet berre flytter seg i eit sekund eller noke, ikkje heile tida mens me trykker inn

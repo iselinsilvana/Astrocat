@@ -38,7 +38,7 @@ class Pusefinn : Actor() {
 
     init {
         resetPosition()
-        val startingX: Float = (WIDTH_F/2) - (region.regionWidth/4)
+        val startingX: Float = (WIDTH_WORLD_UNITS/2) - (region.regionWidth/4)
         setBounds(startingX, 50f, region.regionWidth.toFloat() * PUSEFINN_SCALE, region.regionHeight.toFloat() * PUSEFINN_SCALE)
         listeners.add(touchListener)
     }
